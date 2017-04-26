@@ -15,9 +15,14 @@ public class ElevatorSimulator{
 		System.out.print("Total number of elevators: ");  
 		Integer totalNumberOfElevators = Integer.valueOf(scanner.next());
 		
-		scanner.close();
+		ElevatorPool elevatorPool = new ElevatorPool(highestFloor, totalNumberOfElevators);
+		elevatorPool.start();
+		
+	
+		System.out.println("** Elevators initialized. Time to move up and down **");
 		while(true){
-			System.out.print("Enter number of floors: ");  			
+			System.out.print("Which floor do you want to go to ? ");
+			Integer gotoFloor = Integer.valueOf(scanner.next());
 			Thread.sleep(sleepTimeBeforeButtonClickAgain);
 		}
 	}

@@ -27,4 +27,12 @@ public class ElevatorStatus {
 		this.goToFloors = goToFloors;
 	}
 	
+	public void moveUp(){
+		currentFloor = currentFloor + 1;
+	}
+	
+	public void moveDown(){
+		currentFloor = currentFloor - 1;
+	}
+	
 }
