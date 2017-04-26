@@ -28,6 +28,7 @@ public class ElevatorPool{
 	
 	public void buttonPressed(Integer floor) throws InterruptedException{
 		Elevator elevator = getClosestElevator(floor);
+		elevator.printStatus();
 		elevator.moveTo(floor);
 	}	
 	

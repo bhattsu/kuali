@@ -1,5 +1,7 @@
 package com.kuali;
 
+import java.util.TreeSet;
+
 public class Elevator implements Runnable {
 	
 	Integer lowestFloorAllowed = null;
@@ -24,18 +26,32 @@ public class Elevator implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
-	}	
-	
-	public void moveTo(Integer floor) throws InterruptedException {
-		synchronized(this){
-			if(elevatorStatus.getCurrentFloor() < floor){
-				moveUp(floor);
-			} else {
-				moveDown(floor);
+		while(elevatorStatus.getNumberOfRuns() < 10) {			
+			try {
+				TreeSet<Integer> goToFloors = elevatorStatus.getGoToFloors();
+				System.out.println("The Go To Floor Size is " + goToFloors.size());
+				if(goToFloors.size() > 0){			
+					for(Integer floor: goToFloors){
+						moveTo(floor);
+						goToFloors.remove(floor);
+					}	
+				} else {
+					//No request so go to sleep for some time.
+					Thread.sleep(2000);
+				}
+			}			
+			catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}	
+	
+	
+	public void moveTo(Integer floor) throws InterruptedException {
+		synchronized(this){
+			elevatorStatus.addGoToFloors(floor);
+		}
+	}		
 	
 	public void moveUp(Integer floor) throws InterruptedException {
 		while(elevatorStatus.getCurrentFloor() < floor){
@@ -52,6 +68,7 @@ public class Elevator implements Runnable {
 			printStatus();
 		}
 	}	
+		
 	
 	public void printStatus(){
 		StringBuffer sb = new StringBuffer();

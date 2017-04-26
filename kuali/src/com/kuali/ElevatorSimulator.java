@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class ElevatorSimulator{
 	
-	public final static long sleepTimeBeforeButtonClickAgain = 5000;
+	//public final static long sleepTimeBeforeButtonClickAgain = 5000;
 	
 	public static void main(String args[]) throws InterruptedException {
 		
@@ -23,7 +23,8 @@ public class ElevatorSimulator{
 		while(true){
 			System.out.print("Which floor do you want to go to ? ");
 			Integer gotoFloor = Integer.valueOf(scanner.next());
-			Thread.sleep(sleepTimeBeforeButtonClickAgain);
+			elevatorPool.buttonPressed(gotoFloor);
+			//Thread.sleep(sleepTimeBeforeButtonClickAgain);
 		}
 	}
 }

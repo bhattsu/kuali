@@ -23,8 +23,8 @@ public class ElevatorStatus {
 	public TreeSet<Integer> getGoToFloors() {
 		return goToFloors;
 	}
-	public void setGoToFloors(TreeSet<Integer> goToFloors) {
-		this.goToFloors = goToFloors;
+	public void addGoToFloors(Integer goToFloor) {
+		this.goToFloors.add(goToFloor);
 	}
 	
 	public void moveUp(){
