@@ -29,27 +29,29 @@ public class ElevatorPool{
 	public void buttonPressed(Integer floor) throws InterruptedException{
 		Elevator elevator = getClosestElevator(floor);
 		elevator.printStatus();
-		elevator.moveTo(floor);
+		elevator.addGoToFloors(floor);
 	}	
 	
 	public Elevator getClosestElevator(Integer floor){
 		Elevator closestElevator = null;
 		for(Elevator elevator: elevators){
+						
 			ElevatorStatus elevatorStatus = elevator.getElevatorStatus();
-			synchronized(elevatorStatus){
-				if(closestElevator != null && elevatorStatus.getCurrentFloor().equals(floor)){
-					return closestElevator;
-				}				
-				if(closestElevator == null){
+			
+			if(closestElevator != null && elevatorStatus.getCurrentFloor().equals(floor)){
+				return closestElevator;
+			}				
+			if(closestElevator == null){
+				closestElevator = elevator;
+			} else {
+				ElevatorStatus closestElevatorStatus = elevator.getElevatorStatus();
+				int distance = Math.abs(closestElevatorStatus.getCurrentFloor() - elevatorStatus.getCurrentFloor());
+				if(distance < closestElevatorStatus.getCurrentFloor()){
 					closestElevator = elevator;
-				} else {
-					int distance = Math.abs(elevatorStatus.getCurrentFloor() - elevatorStatus.getCurrentFloor());
-					if(distance < elevatorStatus.getCurrentFloor()){
-						closestElevator = elevator;
-					}
 				}
 			}
 		}
+		
 		return closestElevator;
 	}	
 }

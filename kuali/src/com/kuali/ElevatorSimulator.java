@@ -21,7 +21,7 @@ public class ElevatorSimulator{
 	
 		System.out.println("** Elevators initialized. Time to move up and down **");
 		while(true){
-			System.out.print("Which floor do you want to go to ? ");
+			System.out.println("Which floor do you want to go to ? ");
 			Integer gotoFloor = Integer.valueOf(scanner.next());
 			elevatorPool.buttonPressed(gotoFloor);
 			//Thread.sleep(sleepTimeBeforeButtonClickAgain);

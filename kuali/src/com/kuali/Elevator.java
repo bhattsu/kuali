@@ -28,9 +28,9 @@ public class Elevator implements Runnable {
 	public void run() {
 		while(elevatorStatus.getNumberOfRuns() < 10) {			
 			try {
-				TreeSet<Integer> goToFloors = elevatorStatus.getGoToFloors();
-				System.out.println("The Go To Floor Size is " + goToFloors.size());
+				TreeSet<Integer> goToFloors = elevatorStatus.getGoToFloors();				
 				if(goToFloors.size() > 0){			
+					System.out.println("Yey! now moving " + goToFloors.size());
 					for(Integer floor: goToFloors){
 						moveTo(floor);
 						goToFloors.remove(floor);
@@ -47,9 +47,19 @@ public class Elevator implements Runnable {
 	}	
 	
 	
-	public void moveTo(Integer floor) throws InterruptedException {
+	public void addGoToFloors(Integer floor) throws InterruptedException {
 		synchronized(this){
 			elevatorStatus.addGoToFloors(floor);
+		}
+	}		
+	
+	public void moveTo(Integer floor) throws InterruptedException {
+		synchronized(this){
+			if(elevatorStatus.getCurrentFloor() < floor){
+				moveUp(floor);
+			} else {
+				moveDown(floor);
+			}
 		}
 	}		
 	
