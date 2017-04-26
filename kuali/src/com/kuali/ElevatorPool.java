@@ -36,9 +36,10 @@ public class ElevatorPool{
 		Elevator closestElevator = null;
 		
 		for(Elevator elevator: elevators){
-			if(!elevator.isActive()){ continue; } //Some elevators may go to servicing so they become inactive
 			
 			ElevatorStatus elevatorStatus = elevator.getElevatorStatus();
+			
+			if(!elevatorStatus.isActive()){ continue; } //Some elevators may go to servicing so they become inactive
 			
 			if(closestElevator != null && elevatorStatus.getCurrentFloor().equals(floor)){
 				return closestElevator;

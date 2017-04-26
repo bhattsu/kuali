@@ -9,7 +9,7 @@ public class Elevator implements Runnable {
 	String id = null;
 	ElevatorStatus elevatorStatus = null;
 	Integer maxNumberOfTrips = 100;
-	boolean isActive = false;
+	
 	
 	
 	public Elevator(String id, Integer lowestFloorAllowed, Integer highestFloorAllowed) {
@@ -28,13 +28,6 @@ public class Elevator implements Runnable {
 	}
 		
 
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 
 	@Override
 	public void run() {
@@ -46,7 +39,7 @@ public class Elevator implements Runnable {
 					for(Integer floor: goToFloors){
 						moveTo(floor);
 						goToFloors.remove(floor);
-						elevatorStatus.addToNumberOfRuns();
+						elevatorStatus.addToNumberOfRuns(maxNumberOfTrips);
 					}	
 				} else {
 					//No request so go to sleep for some time.
