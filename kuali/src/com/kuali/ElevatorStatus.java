@@ -35,4 +35,8 @@ public class ElevatorStatus {
 		currentFloor = currentFloor - 1;
 	}
 	
+	public void addToNumberOfRuns(){
+		numberOfRuns = numberOfRuns + 1;
+	}
+	
 }

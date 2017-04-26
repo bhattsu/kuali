@@ -8,6 +8,9 @@ public class Elevator implements Runnable {
 	Integer highestFloorAllowed = null;	
 	String id = null;
 	ElevatorStatus elevatorStatus = null;
+	Integer maxNumberOfTrips = 100;
+	boolean isActive = false;
+	
 	
 	public Elevator(String id, Integer lowestFloorAllowed, Integer highestFloorAllowed) {
 		this.id = id;
@@ -23,17 +26,27 @@ public class Elevator implements Runnable {
 	public void setElevatorStatus(ElevatorStatus elevatorStatus) {
 		this.elevatorStatus = elevatorStatus;
 	}
+		
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	@Override
 	public void run() {
-		while(elevatorStatus.getNumberOfRuns() < 10) {			
+		while(elevatorStatus.getNumberOfRuns() < maxNumberOfTrips) { //This will make sure you can only have 100 max trips before service will be needed		
 			try {
-				TreeSet<Integer> goToFloors = elevatorStatus.getGoToFloors();				
+				TreeSet<Integer> goToFloors = elevatorStatus.getGoToFloors(); //Sorted list can have multiple floors queued			
 				if(goToFloors.size() > 0){			
 					System.out.println("Yey! now moving " + goToFloors.size());
 					for(Integer floor: goToFloors){
 						moveTo(floor);
 						goToFloors.remove(floor);
+						elevatorStatus.addToNumberOfRuns();
 					}	
 				} else {
 					//No request so go to sleep for some time.
@@ -56,7 +69,7 @@ public class Elevator implements Runnable {
 	public void moveTo(Integer floor) throws InterruptedException {
 		synchronized(this){
 			if(elevatorStatus.getCurrentFloor() < floor){
-				moveUp(floor);
+				moveUp(floor);				
 			} else {
 				moveDown(floor);
 			}
@@ -65,7 +78,7 @@ public class Elevator implements Runnable {
 	
 	public void moveUp(Integer floor) throws InterruptedException {
 		while(elevatorStatus.getCurrentFloor() < floor){
-			Thread.sleep(2000);
+			Thread.sleep(2000); //Assuming it takes 2 seconds to move up one floor
 			elevatorStatus.moveUp();
 			printStatus();
 		}
@@ -73,7 +86,7 @@ public class Elevator implements Runnable {
 	
 	public void moveDown(Integer floor) throws InterruptedException {
 		while(elevatorStatus.getCurrentFloor() > floor){
-			Thread.sleep(2000);
+			Thread.sleep(2000);  //Assuming it takes 2 seconds to move down one floor
 			elevatorStatus.moveDown();
 			printStatus();
 		}

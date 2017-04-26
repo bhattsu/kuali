@@ -32,10 +32,12 @@ public class ElevatorPool{
 		elevator.addGoToFloors(floor);
 	}	
 	
-	public Elevator getClosestElevator(Integer floor){
+	public Elevator getClosestElevator(Integer floor){ 
 		Elevator closestElevator = null;
+		
 		for(Elevator elevator: elevators){
-						
+			if(!elevator.isActive()){ continue; } //Some elevators may go to servicing so they become inactive
+			
 			ElevatorStatus elevatorStatus = elevator.getElevatorStatus();
 			
 			if(closestElevator != null && elevatorStatus.getCurrentFloor().equals(floor)){
@@ -44,9 +46,16 @@ public class ElevatorPool{
 			if(closestElevator == null){
 				closestElevator = elevator;
 			} else {
-				ElevatorStatus closestElevatorStatus = elevator.getElevatorStatus();
-				int distance = Math.abs(closestElevatorStatus.getCurrentFloor() - elevatorStatus.getCurrentFloor());
-				if(distance < closestElevatorStatus.getCurrentFloor()){
+				ElevatorStatus closestElevatorStatus = closestElevator.getElevatorStatus();
+				
+				int oldDistance = closestElevatorStatus.getCurrentFloor() - floor;	
+				int newDistance = elevatorStatus.getCurrentFloor() - floor;	
+				
+				if(oldDistance  < 0){ oldDistance = oldDistance * -1; }
+				if(newDistance  < 0){ newDistance = newDistance * -1; }
+
+				if(newDistance < oldDistance){ //Unfortunately due to time constraint this does not take into account which direction it is moving..That logic has to be added. 
+												//Right now it just goes by distance.
 					closestElevator = elevator;
 				}
 			}
