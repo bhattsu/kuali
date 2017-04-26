@@ -9,8 +9,8 @@ public class ElevatorSimulator{
 	public static void main(String args[]) throws InterruptedException {
 		
 		Scanner scanner = new Scanner (System.in);
-		System.out.print("Enter number of floors: ");  
-		Integer numberOfFloors = Integer.valueOf(scanner.next());
+		System.out.print("Highest floor: ");  
+		Integer highestFloor = Integer.valueOf(scanner.next());
 		
 		System.out.print("Total number of elevators: ");  
 		Integer totalNumberOfElevators = Integer.valueOf(scanner.next());
