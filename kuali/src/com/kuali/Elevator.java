@@ -10,7 +10,7 @@ public class Elevator implements Runnable {
 	ElevatorStatus elevatorStatus = null;
 	Integer maxNumberOfTrips = 100;
 	
-	
+
 	
 	public Elevator(String id, Integer lowestFloorAllowed, Integer highestFloorAllowed) {
 		this.id = id;

@@ -3,7 +3,7 @@ package com.kuali;
 import java.util.Scanner;
 
 public class ElevatorSimulator{
-	
+
 	//public final static long sleepTimeBeforeButtonClickAgain = 5000;
 	
 	public static void main(String args[]) throws InterruptedException {

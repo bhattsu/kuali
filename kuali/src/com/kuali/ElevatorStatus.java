@@ -17,7 +17,7 @@ public class ElevatorStatus {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	
+
 	public Integer getCurrentFloor() {
 		return currentFloor;
 	}
